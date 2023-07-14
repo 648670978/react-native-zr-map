@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.dependency 'React-Core'
   s.dependency 'AMap3DMap-NO-IDFA', '9.6.0'
   # s.dependency 'AMap2DMap', '5.6.1'
-  # s.dependency 'AMapSearch', '9.5.0'
+  s.dependency 'AMapSearch-NO-IDFA', '9.5.0'
   s.dependency 'AMapLocation-NO-IDFA', '2.9.0'
 
 end

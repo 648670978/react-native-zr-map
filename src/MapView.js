@@ -5,30 +5,37 @@ import {
     UIManager, findNodeHandle
 } from 'react-native';
 
-const RNZrMapViewMan =
-    requireNativeComponent('RNZrMapViewMan');
+const ZRMapView =
+    requireNativeComponent('ZRMapView');
 
-const createFragment = (viewId) => {
-    UIManager.dispatchViewManagerCommand(
-        viewId,
-        // we are calling the 'create' command
-        UIManager.RNZrMapViewMan.Commands.create.toString(),
-        [viewId],
-    );
+export class MapView extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+        this.mapViewRef = React.createRef()
+    }
+
+    render() {
+        return (
+            <ZRMapView
+                style={{ flex: 1 }}
+                ref={this.mapViewRef}
+                {...this.props}
+            />
+        );
+    }
+    //{latitude:39.993207,longitude:116.473115}
+    setCameraPosition(position) {
+        UIManager.dispatchViewManagerCommand(
+            findNodeHandle(this),
+            UIManager.getViewManagerConfig('ZRMapView').Commands
+              .setCameraPosition,
+            [position]
+          );
+    }
+
 }
 
-export const MapView = () => {
-    const ref = useRef(null);
 
-    useEffect(() => {
-        const viewId = findNodeHandle(ref.current);
-        createFragment(viewId);
-    }, []);
 
-    return (
-        <RNZrMapViewMan
-            style={{ flex: 1 }}
-            ref={ref}
-        />
-    );
-};

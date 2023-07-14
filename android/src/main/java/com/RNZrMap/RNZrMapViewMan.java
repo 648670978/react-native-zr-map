@@ -40,7 +40,7 @@ public class RNZrMapViewMan extends ViewGroupManager<FrameLayout> {
 
     @Override
     public String getName() {
-        return "RNZrMapViewMan";
+        return "ZRMapView";
     }
 
     @Override

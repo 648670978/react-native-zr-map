@@ -1,4 +1,11 @@
 PODS:
+  - AMap3DMap-NO-IDFA (9.6.0):
+    - AMapFoundation-NO-IDFA (>= 1.8.0)
+  - AMapFoundation-NO-IDFA (1.8.2)
+  - AMapLocation-NO-IDFA (2.9.0):
+    - AMapFoundation-NO-IDFA (>= 1.7.0)
+  - AMapSearch-NO-IDFA (9.5.0):
+    - AMapFoundation-NO-IDFA (>= 1.8.0)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -413,6 +420,11 @@ PODS:
     - React-jsi (= 0.71.4)
     - React-logger (= 0.71.4)
     - React-perflogger (= 0.71.4)
+  - RNZrMap (1.0.0):
+    - AMap3DMap-NO-IDFA (= 9.6.0)
+    - AMapLocation-NO-IDFA (= 2.9.0)
+    - AMapSearch-NO-IDFA (= 9.5.0)
+    - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -477,10 +489,15 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNZrMap (from `../node_modules/react-native-zr-map`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - AMap3DMap-NO-IDFA
+    - AMapFoundation-NO-IDFA
+    - AMapLocation-NO-IDFA
+    - AMapSearch-NO-IDFA
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -564,10 +581,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNZrMap:
+    :path: "../node_modules/react-native-zr-map"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AMap3DMap-NO-IDFA: f242be970ea0eb242b27b1f1fb97765832733546
+  AMapFoundation-NO-IDFA: 6ce0ef596d4eb8d934ff498e56747b6de1247b05
+  AMapLocation-NO-IDFA: 6839d1543b3138ae594ddd36ab72741dc87df66f
+  AMapSearch-NO-IDFA: 10cbd3ad7d122045a0c1f5760f6d46ff576ca918
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -614,10 +637,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: ad17efcfb2fa8f6bfd8ac0cf48d96668b8b28e0b
   React-runtimeexecutor: 8fa50b38df6b992c76537993a2b0553d3b088004
   ReactCommon: b49a4b00ca6d181ff74b17c12b2d59ac4add0bde
+  RNZrMap: 083a28c63dab1a1c81ec77c5755e25a31255df4a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 79dd7410de6f8ad73a77c868d3d368843f0c93e0
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 446419b91f3d523996e9ca2fa51242b50bd76552
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
