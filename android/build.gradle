@@ -39,7 +39,7 @@ dependencies {
     //导航
     // implementation 'com.amap.api:navi-3dmap:latest.integration'
     //搜索
-    // implementation 'com.amap.api:search:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
     //定位
     // implementation 'com.amap.api:location:latest.integration'
 

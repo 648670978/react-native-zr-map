@@ -2,7 +2,7 @@ import React, { useRef, useEffect, Component } from 'react';
 import {
     View,
     requireNativeComponent,
-    UIManager, findNodeHandle
+    UIManager, findNodeHandle,Platform
 } from 'react-native';
 
 const ZRMapView =
@@ -16,6 +16,17 @@ export class MapView extends Component {
         this.mapViewRef = React.createRef()
     }
 
+    componentDidMount() {
+        if (Platform.OS == 'android') {
+            const viewId = findNodeHandle(this.mapViewRef.current);
+            UIManager.dispatchViewManagerCommand(
+                viewId,
+                UIManager.ZRMapView.Commands.create.toString(), // we are calling the 'create' command
+                [viewId]
+              );
+        }
+    }
+
     render() {
         return (
             <ZRMapView
@@ -27,11 +38,12 @@ export class MapView extends Component {
     }
     //{latitude:39.993207,longitude:116.473115}
     setCameraPosition(position) {
+        const viewId = findNodeHandle(this.mapViewRef.current);
         UIManager.dispatchViewManagerCommand(
             findNodeHandle(this),
             UIManager.getViewManagerConfig('ZRMapView').Commands
-              .setCameraPosition,
-            [position]
+              .setCameraPosition.toString(),
+            [viewId,position]
           );
     }
 

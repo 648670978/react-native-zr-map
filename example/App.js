@@ -15,7 +15,7 @@ import {
   useColorScheme,
   View, Platform, NativeModules
 } from 'react-native';
-import { initMap, MapView, MapMarker } from 'react-native-zr-map'
+import { initMap, MapView, MapMarker,createPosition } from 'react-native-zr-map'
 
 const { RNZrMap } = NativeModules;
 
@@ -25,7 +25,10 @@ function App() {
     <View style={{ flex: 1 }}>
       <View style={{ width:300,height:500 }}>
         <MapView ref={(ref)=>{this.mapView=ref}} >
-          <MapMarker />
+          <MapMarker 
+          coordinate={createPosition(39.989631,116.481018)} 
+          title={'标题'} 
+          subtitle={'副标题'}  />
         </MapView>
       </View>
 
@@ -37,7 +40,7 @@ function App() {
         获取坐标
       </Text>
       <Text style={{}} onPress={() => {
-        this.mapView.setCameraPosition()
+        this.mapView.setCameraPosition(createPosition(39.989631,116.481018))
       }}>
         设置中心点
       </Text>

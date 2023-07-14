@@ -34,9 +34,9 @@
   return _view;
 }
 
-- (void)setPosition:(CLLocationCoordinate2D)coordinate {
+- (void)setCoordinate:(CLLocationCoordinate2D)coordinate {
   self.annotation.coordinate = coordinate;
-}
+}                   
 
 - (void)setTitle:(NSString *)title {
     self.annotation.title = title;
@@ -57,7 +57,7 @@
 
 RCT_EXPORT_MODULE(ZRMapMarker)
 
-RCT_EXPORT_VIEW_PROPERTY(position,CLLocationCoordinate2D)
+RCT_EXPORT_VIEW_PROPERTY(coordinate,CLLocationCoordinate2D)
 RCT_EXPORT_VIEW_PROPERTY(title,NSString)
 RCT_EXPORT_VIEW_PROPERTY(subtitle,NSString)
 

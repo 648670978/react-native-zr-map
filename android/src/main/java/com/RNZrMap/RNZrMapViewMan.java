@@ -24,14 +24,16 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
-public class RNZrMapViewMan extends ViewGroupManager<FrameLayout> {
+public class RNZrMapViewMan extends ViewGroupManager<RNZrMapView> {
 
     ReactApplicationContext reactContext;
-    public final int COMMAND_CREATE = 1;
-    private int propWidth;
-    private int propHeight;
+    public final int create_CREATE = 1;
+    public final int setCameraPosition_CREATE = 2;
+
     String TAG = "zr";
 
     public RNZrMapViewMan(ReactApplicationContext reactContext) {
@@ -44,80 +46,57 @@ public class RNZrMapViewMan extends ViewGroupManager<FrameLayout> {
     }
 
     @Override
-    public FrameLayout createViewInstance(ThemedReactContext reactContext) {
-        FrameLayout view =  new FrameLayout(reactContext);
-        return view;
+    public RNZrMapView createViewInstance(ThemedReactContext reactContext) {
+        return new RNZrMapView(reactContext);
+    }
+
+    @Override
+    public void onDropViewInstance(RNZrMapView view) {
+        super.onDropViewInstance(view);
+        view.onDestroy();
     }
 
     @Nullable
     @Override
     public Map<String, Integer> getCommandsMap() {
-        return MapBuilder.of("create", COMMAND_CREATE);
+        return MapBuilder.of("create", create_CREATE,"setCameraPosition",setCameraPosition_CREATE);
     }
 
     @Override
     public void receiveCommand(
-            @NonNull FrameLayout root,
+            @NonNull RNZrMapView root,
             String commandId,
             @Nullable ReadableArray args
     ) {
         super.receiveCommand(root, commandId, args);
-        int reactNativeViewId = args.getInt(0);
         int commandIdInt = Integer.parseInt(commandId);
+        int reactNativeViewId = args.getInt(0);
         Log.e(TAG, "receiveCommand: "+commandIdInt );
+        Log.e(TAG, "reactNativeViewId: "+reactNativeViewId );
         switch (commandIdInt) {
-            case COMMAND_CREATE:
-                createFragment(root, reactNativeViewId);
+            case create_CREATE:
+            {
+//                createFragment(root, reactNativeViewId);
+                root.onCreate(null);
+            }
+                break;
+            case setCameraPosition_CREATE:
+                ReadableMap map = args.getMap(1);
+                root.setCameraPosition(map);
                 break;
             default: {}
         }
     }
 
-    public void createFragment(FrameLayout root, int reactNativeViewId) {
-        ViewGroup parentView = (ViewGroup) root.findViewById(reactNativeViewId);
-        Log.e(TAG, "createFragment: "+parentView+"\n"+reactNativeViewId );
-        setupLayout(parentView);
-
-        final RNZrMaoFragment myFragment = new RNZrMaoFragment();
-        FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(reactNativeViewId, myFragment, String.valueOf(reactNativeViewId))
-                .commit();
+    @Override
+    public void addView(RNZrMapView parent, View child, int index) {
+        parent.add(child);
+        super.addView(parent,child,index);
     }
-
-    public void setupLayout(View view) {
-        Log.e(TAG, "setupLayout: " );
-        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
-            @Override
-            public void doFrame(long frameTimeNanos) {
-                Log.e(TAG, "doFrame: " );
-                manuallyLayoutChildren(view);
-                view.getViewTreeObserver().dispatchOnGlobalLayout();
-//                Choreographer.getInstance().postFrameCallback(this);
-            }
-        });
+    @Override
+    public void removeViewAt(RNZrMapView parent, int index) {
+        parent.remove(parent.getChildAt(index));
+        super.removeViewAt(parent, index);
     }
-
-    public void manuallyLayoutChildren(View view) {
-        // propWidth and propHeight coming from react-native props
-        int width = view.getMeasuredWidth();
-        int height = view.getMeasuredHeight();
-        Log.e("zr", "width: "+width );
-        Log.e("zr", "height: "+height );
-
-        view.measure(
-                View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-        view.layout(0, 0, width, height);
-    }
-
-
-    @ReactProp(name = "initialCameraPosition")
-    public void setInitialCameraPosition(MapView view, ReadableMap position) {
-//        view.setInitialCameraPosition(position);
-    }
-
-
 
 }

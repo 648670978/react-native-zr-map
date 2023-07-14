@@ -24,7 +24,8 @@ public class RNZrMapPackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
       return Arrays.<ViewManager>asList(
-        new RNZrMapViewMan(reactContext)
+        new RNZrMapViewMan(reactContext),
+        new MarkerManager(reactContext)
       );
     }
 }

@@ -4,6 +4,7 @@ import {
     requireNativeComponent,
     UIManager, findNodeHandle
 } from 'react-native';
+import { createPosition } from './MapTool';
 
 const ZRMapMarker =
     requireNativeComponent('ZRMapMarker');
@@ -13,19 +14,20 @@ export class MapMarker extends Component {
     static defaultProps = {
         title:'',
         subtitle:'',
-        position:{}
+        coordinate:createPosition(0,0)
       };
 
     constructor(props) {
         super(props);
         this.state = {
         };
+        console.log('props',this.props);
     }
 
     render() {
         return (
             <ZRMapMarker
-                {...props}
+                {...this.props}
             />
         );
     }
