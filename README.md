@@ -16,9 +16,10 @@
 #### Android
 
 ```
-<meta-data android:name="com.amap.api.v2.apikey" android:value="key">
-//开发者申请的key  
-</meta-data>
+//在 application 里添加
+<meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="开发者申请的key"/>
 ```
 
 

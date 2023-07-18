@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -97,6 +98,34 @@ public class RNZrMapViewMan extends ViewGroupManager<RNZrMapView> {
     public void removeViewAt(RNZrMapView parent, int index) {
         parent.remove(parent.getChildAt(index));
         super.removeViewAt(parent, index);
+    }
+
+    @ReactProp(name = "initialCoordinate")
+    public void setInitialCoordinate(RNZrMapView parent,ReadableMap coordinate) {
+        parent.setCameraPosition(coordinate);
+    }
+
+    @ReactProp(name = "mapType")
+    public void setMapType(RNZrMapView parent,int mapType) {
+        parent.getMap().setMapType(mapType+1);
+    }
+
+    @ReactProp(name = "zoomEnabled")
+    public void setZoomEnabled(RNZrMapView parent,boolean zoomEnabled) {
+        UiSettings ui = parent.getMap().getUiSettings();
+        ui.setZoomGesturesEnabled(zoomEnabled);
+    }
+
+    @ReactProp(name = "scrollEnabled")
+    public void setScrollEnabled(RNZrMapView parent,boolean scrollEnabled) {
+        UiSettings ui = parent.getMap().getUiSettings();
+        ui.setScrollGesturesEnabled(scrollEnabled);
+    }
+
+    @ReactProp(name = "rotateEnabled")
+    public void setRotateEnabled(RNZrMapView parent,boolean rotateEnabled) {
+        UiSettings ui = parent.getMap().getUiSettings();
+        ui.setRotateGesturesEnabled(rotateEnabled);
     }
 
 }

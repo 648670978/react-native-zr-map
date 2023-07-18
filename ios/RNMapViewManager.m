@@ -13,27 +13,43 @@
 #import "RNMapMarkerManager.h"
 
 
-@interface MapView : MAMapView <MAMapViewDelegate>
+@interface MapView : UIView <MAMapViewDelegate>
+
+@property(nonatomic,strong) MAMapView * map;
+@property(nonatomic,assign) CLLocationCoordinate2D initialCoordinate;
+@property(nonatomic,assign) int mapType;
+@property(nonatomic,assign) BOOL zoomEnabled;
+@property(nonatomic,assign) BOOL scrollEnabled;
+@property(nonatomic,assign) BOOL rotateEnabled;
 
 @end
 
 @implementation MapView
 
+-(instancetype)init {
+    self = [super init];
+    _map = [[MAMapView alloc] init];
+    _map.delegate = self;
+    [self addSubview:_map];
+    return self;
+}
 
 -(void)didAddSubview:(UIView *)subview {
     [super didAddSubview:subview];
     NSLog(@"didAddSubview %@",subview);
     if ([subview isKindOfClass:[MapMarker class]]) {
         MapMarker * mar = (MapMarker *) subview;
-        [self addAnnotation:mar.annotation];
+        [_map addAnnotation:mar.annotation];
     }
-    
-    
 }
 
 -(void)removeReactSubview:(UIView *)subview {
     [super removeReactSubview:subview];
     NSLog(@"removeReactSubview %@",subview);
+    if ([subview isKindOfClass:[MapMarker class]]) {
+        MapMarker * mar = (MapMarker *) subview;
+        [_map removeAnnotation:mar.annotation];
+    }
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation {
@@ -48,6 +64,28 @@
     return nil;
 }
 
+- (void)setInitialCoordinate:(CLLocationCoordinate2D)coordinate {
+      [_map setCenterCoordinate:coordinate];
+}
+-(void)setMapType:(int)mapType {
+    [_map setMapType:mapType];
+}
+-(void)setZoomEnabled:(BOOL)zoomEnabled {
+    [_map setZoomEnabled:zoomEnabled];
+}
+-(void)setScrollEnabled:(BOOL)scrollEnabled {
+    [_map setScrollEnabled:scrollEnabled];
+}
+-(void)setRotateEnabled:(BOOL)rotateEnabled {
+    [_map setRotateEnabled:rotateEnabled];
+}
+
+
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    _map.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+}
+
 @end
 
 
@@ -55,17 +93,24 @@
 
 RCT_EXPORT_MODULE(ZRMapView)
 
+
+RCT_EXPORT_VIEW_PROPERTY(initialCoordinate,CLLocationCoordinate2D)
+RCT_EXPORT_VIEW_PROPERTY(mapType,int)
+RCT_EXPORT_VIEW_PROPERTY(zoomEnabled,BOOL)
+RCT_EXPORT_VIEW_PROPERTY(scrollEnabled,BOOL)
+RCT_EXPORT_VIEW_PROPERTY(rotateEnabled,BOOL)
+
+
 RCT_EXPORT_METHOD(setCameraPosition:(nonnull NSNumber *)reactTag position:(CLLocationCoordinate2D)position) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         MapView *view = (MapView *) viewRegistry[reactTag];
-        [view setCenterCoordinate:position animated:YES];
+        [view.map setCenterCoordinate:position animated:YES];
     }];
 }
 
 - (UIView *)view
 {
     MapView * map = [[MapView alloc] init];
-    map.delegate = map;
     return map;
 }
 

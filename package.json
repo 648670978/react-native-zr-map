@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-zr-map",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "桥接原生高德地图",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "ios",
     "android",
     "src",
-    "RNZrUm.podspec"
+    "RNZrMap.podspec"
   ],
   "author": "zr <zr_ars@163.com>",
   "license": "MIT",
