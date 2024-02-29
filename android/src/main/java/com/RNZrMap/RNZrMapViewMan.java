@@ -48,7 +48,9 @@ public class RNZrMapViewMan extends ViewGroupManager<RNZrMapView> {
 
     @Override
     public RNZrMapView createViewInstance(ThemedReactContext reactContext) {
-        return new RNZrMapView(reactContext);
+        RNZrMapView map = new RNZrMapView(reactContext);
+        map.onCreate(null);
+        return map;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class RNZrMapViewMan extends ViewGroupManager<RNZrMapView> {
             case create_CREATE:
             {
 //                createFragment(root, reactNativeViewId);
-                root.onCreate(null);
+//                root.onCreate(null);
             }
                 break;
             case setCameraPosition_CREATE:

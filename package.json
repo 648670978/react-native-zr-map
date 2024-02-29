@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-zr-map",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "桥接原生高德地图",
   "main": "index.js",
   "scripts": {
